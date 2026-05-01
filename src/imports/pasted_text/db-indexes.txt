@@ -1,0 +1,45 @@
+| tablename       | indexname                             | indexdef                                                                                                                 |
+| --------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| affiliate_usage | idx_affiliate_usage_affiliate_created | CREATE INDEX idx_affiliate_usage_affiliate_created ON public.affiliate_usage USING btree (affiliate_id, created_at DESC) |
+| affiliate_usage | idx_affiliate_usage_affiliate_id      | CREATE INDEX idx_affiliate_usage_affiliate_id ON public.affiliate_usage USING btree (affiliate_id)                       |
+| affiliate_usage | idx_affiliate_usage_created_at        | CREATE INDEX idx_affiliate_usage_created_at ON public.affiliate_usage USING btree (created_at DESC)                      |
+| affiliate_usage | idx_affiliate_usage_discount_code     | CREATE INDEX idx_affiliate_usage_discount_code ON public.affiliate_usage USING btree (discount_code)                     |
+| affiliate_usage | idx_affiliate_usage_order_id          | CREATE INDEX idx_affiliate_usage_order_id ON public.affiliate_usage USING btree (order_id)                               |
+| affiliate_usage | idx_affiliate_usage_user_email        | CREATE INDEX idx_affiliate_usage_user_email ON public.affiliate_usage USING btree (user_email)                           |
+| affiliate_usage | idx_affiliate_usage_user_id           | CREATE INDEX idx_affiliate_usage_user_id ON public.affiliate_usage USING btree (user_id)                                 |
+| affiliates      | idx_affiliates_email                  | CREATE INDEX idx_affiliates_email ON public.affiliates USING btree (email)                                               |
+| affiliates      | idx_affiliates_is_active              | CREATE INDEX idx_affiliates_is_active ON public.affiliates USING btree (is_active)                                       |
+| affiliates      | idx_affiliates_user_id                | CREATE INDEX idx_affiliates_user_id ON public.affiliates USING btree (user_id)                                           |
+| delivery_info   | idx_delivery_info_user_id             | CREATE INDEX idx_delivery_info_user_id ON public.delivery_info USING btree (user_id)                                     |
+| disbursements   | idx_disbursements_affiliate_id        | CREATE INDEX idx_disbursements_affiliate_id ON public.disbursements USING btree (affiliate_id)                           |
+| disbursements   | idx_disbursements_created_at          | CREATE INDEX idx_disbursements_created_at ON public.disbursements USING btree (created_at DESC)                          |
+| discount_codes  | idx_discount_codes_affiliate_id       | CREATE INDEX idx_discount_codes_affiliate_id ON public.discount_codes USING btree (affiliate_id)                         |
+| discount_codes  | idx_discount_codes_code               | CREATE INDEX idx_discount_codes_code ON public.discount_codes USING btree (code)                                         |
+| discount_codes  | idx_discount_codes_is_active          | CREATE INDEX idx_discount_codes_is_active ON public.discount_codes USING btree (is_active)                               |
+| file_uploads    | idx_file_uploads_file_path            | CREATE INDEX idx_file_uploads_file_path ON public.file_uploads USING btree (file_path)                                   |
+| file_uploads    | idx_file_uploads_uploaded_at          | CREATE INDEX idx_file_uploads_uploaded_at ON public.file_uploads USING btree (uploaded_at)                               |
+| file_uploads    | idx_file_uploads_user_id              | CREATE INDEX idx_file_uploads_user_id ON public.file_uploads USING btree (user_id)                                       |
+| materials       | idx_materials_available               | CREATE INDEX idx_materials_available ON public.materials USING btree (available)                                         |
+| materials       | idx_materials_category                | CREATE INDEX idx_materials_category ON public.materials USING btree (category)                                           |
+| order_items     | idx_order_items_created_at            | CREATE INDEX idx_order_items_created_at ON public.order_items USING btree (created_at DESC)                              |
+| order_items     | idx_order_items_material_id           | CREATE INDEX idx_order_items_material_id ON public.order_items USING btree (material_id)                                 |
+| order_items     | idx_order_items_order_id              | CREATE INDEX idx_order_items_order_id ON public.order_items USING btree (order_id)                                       |
+| orders          | idx_orders_batch_id                   | CREATE INDEX idx_orders_batch_id ON public.orders USING btree (batch_id)                                                 |
+| orders          | idx_orders_created_at                 | CREATE INDEX idx_orders_created_at ON public.orders USING btree (created_at DESC)                                        |
+| orders          | idx_orders_order_number               | CREATE INDEX idx_orders_order_number ON public.orders USING btree (order_number)                                         |
+| orders          | idx_orders_payment_gateway            | CREATE INDEX idx_orders_payment_gateway ON public.orders USING btree (payment_gateway)                                   |
+| orders          | idx_orders_payment_id                 | CREATE INDEX idx_orders_payment_id ON public.orders USING btree (payment_id)                                             |
+| orders          | idx_orders_payment_status             | CREATE INDEX idx_orders_payment_status ON public.orders USING btree (payment_status)                                     |
+| orders          | idx_orders_payment_verified_at        | CREATE INDEX idx_orders_payment_verified_at ON public.orders USING btree (payment_verified_at)                           |
+| orders          | idx_orders_status                     | CREATE INDEX idx_orders_status ON public.orders USING btree (status)                                                     |
+| orders          | idx_orders_status_payment             | CREATE INDEX idx_orders_status_payment ON public.orders USING btree (delivery_status, payment_status)                    |
+| orders          | idx_orders_user_created               | CREATE INDEX idx_orders_user_created ON public.orders USING btree (user_id, created_at DESC)                             |
+| sessions        | idx_sessions_created_at               | CREATE INDEX idx_sessions_created_at ON public.sessions USING btree (created_at)                                         |
+| sessions        | idx_sessions_session_id               | CREATE INDEX idx_sessions_session_id ON public.sessions USING btree (session_id)                                         |
+| settings        | idx_settings_key                      | CREATE INDEX idx_settings_key ON public.settings USING btree (key)                                                       |
+| shipping_rates  | idx_shipping_rates_active             | CREATE INDEX idx_shipping_rates_active ON public.shipping_rates USING btree (is_active)                                  |
+| shipping_rates  | idx_shipping_rates_state              | CREATE INDEX idx_shipping_rates_state ON public.shipping_rates USING btree (state)                                       |
+| thicknesses     | idx_thicknesses_available             | CREATE INDEX idx_thicknesses_available ON public.thicknesses USING btree (available)                                     |
+| thicknesses     | idx_thicknesses_material_id           | CREATE INDEX idx_thicknesses_material_id ON public.thicknesses USING btree (material_id)                                 |
+| users           | idx_users_auth_user_id                | CREATE INDEX idx_users_auth_user_id ON public.users USING btree (auth_user_id)                                           |
+| users           | idx_users_email                       | CREATE INDEX idx_users_email ON public.users USING btree (email)                                                         |

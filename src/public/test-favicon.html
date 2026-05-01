@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SheetCutters Favicon Test</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #000;
+      color: #fff;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #dc0000;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+    
+    h2 {
+      color: #fff;
+      margin: 30px 0 15px;
+      font-size: 24px;
+      border-bottom: 2px solid #dc0000;
+      padding-bottom: 10px;
+    }
+    
+    .status {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+    
+    .status-item {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      padding: 10px;
+      background: #0a0a0a;
+      border-radius: 5px;
+    }
+    
+    .icon {
+      width: 48px;
+      height: 48px;
+      margin-right: 15px;
+      border: 2px solid #333;
+      border-radius: 5px;
+      background: #fff;
+    }
+    
+    .success {
+      color: #4ade80;
+    }
+    
+    .error {
+      color: #ef4444;
+    }
+    
+    .warning {
+      color: #fbbf24;
+    }
+    
+    .info {
+      color: #60a5fa;
+    }
+    
+    pre {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 15px;
+      overflow-x: auto;
+      margin: 10px 0;
+      font-size: 12px;
+    }
+    
+    button {
+      background: #dc0000;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 10px 10px 0;
+      transition: background 0.2s;
+    }
+    
+    button:hover {
+      background: #b00000;
+    }
+    
+    .test-result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      background: #1a1a1a;
+      border-left: 4px solid #dc0000;
+    }
+    
+    a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 SheetCutters Favicon Test Suite</h1>
+    <p style="color: #999; margin-bottom: 30px;">
+      This page tests if your favicon is properly configured for Google Search results.
+    </p>
+
+    <div class="status">
+      <h2>✅ Favicon Status</h2>
+      <div id="favicon-status"></div>
+    </div>
+
+    <div class="status">
+      <h2>🔗 Detected Favicon URLs</h2>
+      <div id="favicon-urls"></div>
+    </div>
+
+    <div class="status">
+      <h2>🧪 Quick Tests</h2>
+      <button onclick="testFaviconLoad()">Test Favicon Loading</button>
+      <button onclick="testImageDimensions()">Check Image Dimensions</button>
+      <button onclick="copyFaviconURL()">Copy Favicon URL</button>
+      <div id="test-results"></div>
+    </div>
+
+    <div class="status">
+      <h2>📋 Google Search Console Actions</h2>
+      <ol style="color: #ccc; margin-left: 20px;">
+        <li>Open <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a></li>
+        <li>Select your property: <code style="color: #dc0000;">sheetcutters.com</code></li>
+        <li>Click "URL Inspection" in the left sidebar</li>
+        <li>Enter: <code style="color: #dc0000;">https://www.sheetcutters.com</code></li>
+        <li>Click "Request Indexing"</li>
+        <li>Wait 2-7 days and check Google search results</li>
+      </ol>
+    </div>
+
+    <div class="status">
+      <h2>📊 Expected Timeline</h2>
+      <ul style="list-style: none; color: #ccc;">
+        <li>✅ <strong>Immediate:</strong> Favicon shows in browser tabs</li>
+        <li>⏰ <strong>1-3 days:</strong> Google recrawls your site</li>
+        <li>⏰ <strong>1-2 weeks:</strong> Favicon cache updates</li>
+        <li>⏰ <strong>2-8 weeks:</strong> Appears in Google search results</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Check all favicon tags
+    function checkFaviconStatus() {
+      const faviconLinks = document.querySelectorAll('link[rel*="icon"]');
+      const statusDiv = document.getElementById('favicon-status');
+      const urlsDiv = document.getElementById('favicon-urls');
+      
+      if (faviconLinks.length === 0) {
+        statusDiv.innerHTML = '<div class="status-item"><span class="error">❌ No favicon links found!</span></div>';
+        return;
+      }
+      
+      statusDiv.innerHTML = `<div class="status-item"><span class="success">✅ Found ${faviconLinks.length} favicon link(s)</span></div>`;
+      
+      let urlsHTML = '';
+      faviconLinks.forEach((link, index) => {
+        const rel = link.getAttribute('rel');
+        const type = link.getAttribute('type') || 'not specified';
+        const sizes = link.getAttribute('sizes') || 'any';
+        const href = link.getAttribute('href');
+        
+        urlsHTML += `
+          <div class="status-item">
+            <img src="${href}" class="icon" onerror="this.style.background='#ef4444'">
+            <div>
+              <div><strong>Link ${index + 1}:</strong> <code>rel="${rel}"</code></div>
+              <div style="font-size: 12px; color: #999;">
+                Type: ${type} | Sizes: ${sizes}
+              </div>
+              <div style="font-size: 11px; color: #60a5fa; margin-top: 5px;">
+                <a href="${href}" target="_blank">${href}</a>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      urlsDiv.innerHTML = urlsHTML;
+    }
+    
+    // Test if favicon loads
+    function testFaviconLoad() {
+      const resultsDiv = document.getElementById('test-results');
+      const faviconLink = document.querySelector('link[rel="icon"]');
+      
+      if (!faviconLink) {
+        resultsDiv.innerHTML = '<div class="test-result"><span class="error">❌ No favicon link found</span></div>';
+        return;
+      }
+      
+      const faviconURL = faviconLink.getAttribute('href');
+      resultsDiv.innerHTML = '<div class="test-result"><span class="info">⏳ Testing favicon load...</span></div>';
+      
+      const img = new Image();
+      const startTime = performance.now();
+      
+      img.onload = function() {
+        const loadTime = (performance.now() - startTime).toFixed(2);
+        resultsDiv.innerHTML = `
+          <div class="test-result">
+            <span class="success">✅ Favicon loaded successfully!</span><br>
+            <span class="info">Load time: ${loadTime}ms</span><br>
+            <span class="info">Dimensions: ${img.width}×${img.height}px</span><br>
+            ${img.width >= 48 && img.height >= 48 
+              ? '<span class="success">✅ Meets Google minimum (48×48px)</span>' 
+              : '<span class="error">❌ Too small! Google requires minimum 48×48px</span>'}
+          </div>
+        `;
+      };
+      
+      img.onerror = function() {
+        resultsDiv.innerHTML = `
+          <div class="test-result">
+            <span class="error">❌ Failed to load favicon</span><br>
+            <span style="color: #999;">URL: ${faviconURL}</span><br>
+            <span style="color: #999;">Check if URL is publicly accessible</span>
+          </div>
+        `;
+      };
+      
+      img.src = faviconURL;
+    }
+    
+    // Test image dimensions
+    function testImageDimensions() {
+      const resultsDiv = document.getElementById('test-results');
+      const faviconLink = document.querySelector('link[rel="icon"]');
+      
+      if (!faviconLink) {
+        resultsDiv.innerHTML = '<div class="test-result"><span class="error">❌ No favicon link found</span></div>';
+        return;
+      }
+      
+      const faviconURL = faviconLink.getAttribute('href');
+      const img = new Image();
+      
+      img.onload = function() {
+        const isSquare = img.width === img.height;
+        const meetsMinSize = img.width >= 48 && img.height >= 48;
+        const isOptimal = img.width >= 192 && img.height >= 192;
+        
+        resultsDiv.innerHTML = `
+          <div class="test-result">
+            <h3 style="color: #dc0000; margin-bottom: 10px;">Image Analysis:</h3>
+            <div>📐 <strong>Dimensions:</strong> ${img.width}×${img.height}px</div>
+            <div>${isSquare ? '<span class="success">✅</span>' : '<span class="error">❌</span>'} Square shape: ${isSquare ? 'Yes' : 'No'}</div>
+            <div>${meetsMinSize ? '<span class="success">✅</span>' : '<span class="error">❌</span>'} Meets minimum (48×48): ${meetsMinSize ? 'Yes' : 'No'}</div>
+            <div>${isOptimal ? '<span class="success">✅</span>' : '<span class="warning">⚠️</span>'} Optimal size (192×192+): ${isOptimal ? 'Yes' : 'No'}</div>
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #333;">
+              <strong>Google Requirements:</strong><br>
+              • Format: PNG or ICO ✅<br>
+              • Minimum: 48×48px ${meetsMinSize ? '✅' : '❌'}<br>
+              • Shape: Square (1:1 ratio) ${isSquare ? '✅' : '❌'}<br>
+              • Recommended: 192×192px or larger ${isOptimal ? '✅' : '⚠️'}
+            </div>
+          </div>
+        `;
+      };
+      
+      img.onerror = function() {
+        resultsDiv.innerHTML = '<div class="test-result"><span class="error">❌ Failed to load image</span></div>';
+      };
+      
+      img.src = faviconURL;
+    }
+    
+    // Copy favicon URL to clipboard
+    function copyFaviconURL() {
+      const faviconLink = document.querySelector('link[rel="icon"]');
+      if (!faviconLink) {
+        alert('No favicon link found');
+        return;
+      }
+      
+      const url = faviconLink.getAttribute('href');
+      navigator.clipboard.writeText(url).then(() => {
+        const resultsDiv = document.getElementById('test-results');
+        resultsDiv.innerHTML = `
+          <div class="test-result">
+            <span class="success">✅ Favicon URL copied to clipboard!</span><br>
+            <code style="color: #999;">${url}</code>
+          </div>
+        `;
+      });
+    }
+    
+    // Run checks on page load
+    document.addEventListener('DOMContentLoaded', checkFaviconStatus);
+  </script>
+</body>
+</html>

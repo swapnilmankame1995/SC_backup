@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitemap Tester - Sheetcutters.com</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #dc0000;
+    }
+    
+    .subtitle {
+      color: #888;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+    
+    .test-section {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .test-section h2 {
+      color: #dc0000;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    
+    .url-box {
+      background: #0a0a0a;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      word-break: break-all;
+      color: #4ade80;
+    }
+    
+    button {
+      background: #dc0000;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: all 0.2s;
+    }
+    
+    button:hover {
+      background: #b00000;
+      transform: translateY(-2px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .result {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 4px;
+      display: none;
+    }
+    
+    .result.success {
+      background: #065f46;
+      border: 1px solid #10b981;
+      display: block;
+    }
+    
+    .result.error {
+      background: #7f1d1d;
+      border: 1px solid #dc2626;
+      display: block;
+    }
+    
+    .result h3 {
+      margin-bottom: 10px;
+    }
+    
+    .result pre {
+      background: #0a0a0a;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      border: 1px solid #444;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    
+    .status-indicator.success {
+      background: #10b981;
+    }
+    
+    .status-indicator.error {
+      background: #dc2626;
+    }
+    
+    .status-indicator.pending {
+      background: #fbbf24;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .info-box {
+      background: #1e3a8a;
+      border: 1px solid #3b82f6;
+      padding: 20px;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    
+    .info-box h3 {
+      color: #60a5fa;
+      margin-bottom: 10px;
+    }
+    
+    .info-box p {
+      color: #bfdbfe;
+      line-height: 1.6;
+    }
+    
+    .url-list {
+      margin-top: 15px;
+    }
+    
+    .url-item {
+      background: #0a0a0a;
+      border-left: 3px solid #dc0000;
+      padding: 12px 15px;
+      margin: 8px 0;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    
+    .url-item .priority {
+      color: #fbbf24;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    
+    .url-item .url {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🗺️ Sitemap Tester</h1>
+    <p class="subtitle">Test your Sheetcutters.com sitemap before submitting to Google Search Console</p>
+    
+    <!-- Test Sitemap -->
+    <div class="test-section">
+      <h2>Test Sitemap Endpoint</h2>
+      <p>Click the button below to test if your sitemap is publicly accessible (no authentication required).</p>
+      
+      <div class="url-box">
+        https://sihnzmfaelqopotuinja.supabase.co/functions/v1/make-server-8927474f/sitemap.xml
+      </div>
+      
+      <button onclick="testSitemap()">
+        <span class="status-indicator pending" id="sitemap-status"></span>
+        Test Sitemap
+      </button>
+      
+      <div class="result" id="sitemap-result"></div>
+    </div>
+    
+    <!-- Test Robots.txt -->
+    <div class="test-section">
+      <h2>Test Robots.txt Endpoint</h2>
+      <p>Test if your robots.txt file is accessible.</p>
+      
+      <div class="url-box">
+        https://sihnzmfaelqopotuinja.supabase.co/functions/v1/make-server-8927474f/robots.txt
+      </div>
+      
+      <button onclick="testRobots()">
+        <span class="status-indicator pending" id="robots-status"></span>
+        Test Robots.txt
+      </button>
+      
+      <div class="result" id="robots-result"></div>
+    </div>
+    
+    <!-- Info Box -->
+    <div class="info-box">
+      <h3>📋 What's in Your Sitemap?</h3>
+      <p>Your sitemap includes 11 URLs with optimized priorities for SEO:</p>
+      <div class="url-list">
+        <div class="url-item">
+          <span class="priority">Priority 1.0</span>
+          <span class="url">Homepage</span>
+        </div>
+        <div class="url-item">
+          <span class="priority">Priority 0.9</span>
+          <span class="url">Laser Cutting Service</span>
+        </div>
+        <div class="url-item">
+          <span class="priority">Priority 0.9</span>
+          <span class="url">Convert Sketch to CAD Service</span>
+        </div>
+        <div class="url-item">
+          <span class="priority">Priority 0.5-0.8</span>
+          <span class="url">8 Information & Legal Pages</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    async function testSitemap() {
+      const resultDiv = document.getElementById('sitemap-result');
+      const statusIndicator = document.getElementById('sitemap-status');
+      const url = 'https://sihnzmfaelqopotuinja.supabase.co/functions/v1/make-server-8927474f/sitemap.xml';
+      
+      resultDiv.className = 'result';
+      resultDiv.style.display = 'none';
+      statusIndicator.className = 'status-indicator pending';
+      
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        
+        if (response.ok && text.includes('<?xml') && text.includes('urlset')) {
+          statusIndicator.className = 'status-indicator success';
+          resultDiv.className = 'result success';
+          
+          // Count URLs
+          const urlCount = (text.match(/<url>/g) || []).length;
+          
+          resultDiv.innerHTML = `
+            <h3>✅ Success! Sitemap is working correctly</h3>
+            <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+            <p><strong>Content-Type:</strong> ${response.headers.get('content-type')}</p>
+            <p><strong>URLs Found:</strong> ${urlCount}</p>
+            <p><strong>Authentication:</strong> ✅ No authentication required (public endpoint)</p>
+            <p style="margin-top: 15px; color: #86efac;">
+              <strong>✓ Ready for Google Search Console submission!</strong>
+            </p>
+            <pre>${escapeHtml(text.substring(0, 500))}...</pre>
+          `;
+        } else {
+          throw new Error('Invalid XML format');
+        }
+      } catch (error) {
+        statusIndicator.className = 'status-indicator error';
+        resultDiv.className = 'result error';
+        resultDiv.innerHTML = `
+          <h3>❌ Error Testing Sitemap</h3>
+          <p><strong>Error:</strong> ${error.message}</p>
+          <p>Make sure the server is running and the endpoint is configured correctly.</p>
+        `;
+      }
+    }
+    
+    async function testRobots() {
+      const resultDiv = document.getElementById('robots-result');
+      const statusIndicator = document.getElementById('robots-status');
+      const url = 'https://sihnzmfaelqopotuinja.supabase.co/functions/v1/make-server-8927474f/robots.txt';
+      
+      resultDiv.className = 'result';
+      resultDiv.style.display = 'none';
+      statusIndicator.className = 'status-indicator pending';
+      
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        
+        if (response.ok && text.includes('User-agent')) {
+          statusIndicator.className = 'status-indicator success';
+          resultDiv.className = 'result success';
+          
+          resultDiv.innerHTML = `
+            <h3>✅ Success! Robots.txt is working correctly</h3>
+            <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+            <p><strong>Content-Type:</strong> ${response.headers.get('content-type')}</p>
+            <p><strong>Authentication:</strong> ✅ No authentication required (public endpoint)</p>
+            <pre>${escapeHtml(text)}</pre>
+          `;
+        } else {
+          throw new Error('Invalid robots.txt format');
+        }
+      } catch (error) {
+        statusIndicator.className = 'status-indicator error';
+        resultDiv.className = 'result error';
+        resultDiv.innerHTML = `
+          <h3>❌ Error Testing Robots.txt</h3>
+          <p><strong>Error:</strong> ${error.message}</p>
+          <p>Make sure the server is running and the endpoint is configured correctly.</p>
+        `;
+      }
+    }
+    
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
+    }
+  </script>
+</body>
+</html>

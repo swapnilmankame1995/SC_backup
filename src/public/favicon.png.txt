@@ -1,0 +1,20 @@
+# Favicon PNG Instructions
+
+## Current Status:
+Your SC logo image needs to be hosted on Cloudinary for production use.
+
+## Image Details:
+- Format: PNG
+- Figma asset ID: 5fa48a23db2bc222ef79c2793000543a0c0b5e1f
+
+## Action Required:
+1. Upload the SC logo PNG to Cloudinary
+2. Update FAVICON_URL constant in /components/SEO.tsx with the Cloudinary URL
+
+## Recommended Cloudinary Upload Settings:
+- Folder: favicon
+- Format: PNG
+- Transformations: f_auto,q_auto (automatic format and quality)
+
+## Example URL format:
+https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1234567890/favicon/sc-logo.png

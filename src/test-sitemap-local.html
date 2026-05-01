@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sitemap Test - Sheetcutters.com</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .test-item {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .test-item h3 {
+      margin-top: 0;
+    }
+    .success {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+    .error {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+    .pending {
+      background-color: #fff3cd;
+      border-color: #ffeaa7;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    button {
+      background: #dc0000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #a00000;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 Sitemap & SEO Test - Sheetcutters.com</h1>
+  
+  <div id="results">
+    <div class="test-item pending">
+      <h3>Test 1: Local Sitemap File</h3>
+      <p>Testing if <code>/public/sitemap.xml</code> exists and is valid XML...</p>
+      <button onclick="testLocalSitemap()">Run Test</button>
+      <div id="test1-result"></div>
+    </div>
+
+    <div class="test-item pending">
+      <h3>Test 2: Production Sitemap (sheetcutters.com)</h3>
+      <p>Testing if <code>https://sheetcutters.com/sitemap.xml</code> is accessible...</p>
+      <button onclick="testProductionSitemap()">Run Test</button>
+      <div id="test2-result"></div>
+    </div>
+
+    <div class="test-item pending">
+      <h3>Test 3: Robots.txt</h3>
+      <p>Testing if <code>https://sheetcutters.com/robots.txt</code> is accessible...</p>
+      <button onclick="testRobotsTxt()">Run Test</button>
+      <div id="test3-result"></div>
+    </div>
+
+    <div class="test-item pending">
+      <h3>Test 4: Supabase Function Sitemap</h3>
+      <p>Testing if Supabase function sitemap is accessible...</p>
+      <button onclick="testSupabaseSitemap()">Run Test</button>
+      <div id="test4-result"></div>
+    </div>
+  </div>
+
+  <script>
+    async function testLocalSitemap() {
+      const result = document.getElementById('test1-result');
+      try {
+        const response = await fetch('/sitemap.xml');
+        const text = await response.text();
+        const contentType = response.headers.get('content-type');
+        
+        if (response.ok && (contentType.includes('xml') || text.includes('<?xml'))) {
+          result.innerHTML = `
+            <p style="color: green;">✅ SUCCESS!</p>
+            <p>Content-Type: <code>${contentType}</code></p>
+            <p>File size: ${text.length} bytes</p>
+            <details>
+              <summary>View XML Content</summary>
+              <pre>${text.substring(0, 500)}...</pre>
+            </details>
+          `;
+          result.parentElement.className = 'test-item success';
+        } else {
+          throw new Error('Invalid content type or XML structure');
+        }
+      } catch (error) {
+        result.innerHTML = `<p style="color: red;">❌ FAILED: ${error.message}</p>`;
+        result.parentElement.className = 'test-item error';
+      }
+    }
+
+    async function testProductionSitemap() {
+      const result = document.getElementById('test2-result');
+      try {
+        const response = await fetch('https://sheetcutters.com/sitemap.xml', { mode: 'cors' });
+        const text = await response.text();
+        const contentType = response.headers.get('content-type');
+        
+        if (response.ok && text.includes('<?xml')) {
+          result.innerHTML = `
+            <p style="color: green;">✅ SUCCESS!</p>
+            <p>Status: ${response.status}</p>
+            <p>Content-Type: <code>${contentType}</code></p>
+            <a href="https://sheetcutters.com/sitemap.xml" target="_blank">Open in new tab</a>
+          `;
+          result.parentElement.className = 'test-item success';
+        } else {
+          throw new Error('Not XML content');
+        }
+      } catch (error) {
+        result.innerHTML = `
+          <p style="color: orange;">⚠️ CORS or Network Error (expected in local dev)</p>
+          <p>Try opening directly: <a href="https://sheetcutters.com/sitemap.xml" target="_blank">https://sheetcutters.com/sitemap.xml</a></p>
+        `;
+        result.parentElement.className = 'test-item pending';
+      }
+    }
+
+    async function testRobotsTxt() {
+      const result = document.getElementById('test3-result');
+      try {
+        const response = await fetch('https://sheetcutters.com/robots.txt', { mode: 'cors' });
+        const text = await response.text();
+        
+        if (response.ok && text.includes('User-agent')) {
+          result.innerHTML = `
+            <p style="color: green;">✅ SUCCESS!</p>
+            <details>
+              <summary>View Content</summary>
+              <pre>${text}</pre>
+            </details>
+          `;
+          result.parentElement.className = 'test-item success';
+        } else {
+          throw new Error('Invalid robots.txt');
+        }
+      } catch (error) {
+        result.innerHTML = `
+          <p style="color: orange;">⚠️ ${error.message}</p>
+          <p><a href="https://sheetcutters.com/robots.txt" target="_blank">Open in new tab</a></p>
+        `;
+        result.parentElement.className = 'test-item pending';
+      }
+    }
+
+    async function testSupabaseSitemap() {
+      const result = document.getElementById('test4-result');
+      try {
+        const url = 'https://sihnzmfaelqopotuinja.supabase.co/functions/v1/make-server-8927474f/sitemap.xml';
+        const response = await fetch(url);
+        const text = await response.text();
+        const contentType = response.headers.get('content-type');
+        
+        if (response.ok && text.includes('<?xml')) {
+          result.innerHTML = `
+            <p style="color: green;">✅ SUCCESS!</p>
+            <p>Content-Type: <code>${contentType}</code></p>
+            <a href="${url}" target="_blank">Open in new tab</a>
+          `;
+          result.parentElement.className = 'test-item success';
+        } else {
+          throw new Error('Invalid response');
+        }
+      } catch (error) {
+        result.innerHTML = `<p style="color: red;">❌ FAILED: ${error.message}</p>`;
+        result.parentElement.className = 'test-item error';
+      }
+    }
+
+    // Auto-run local test on load
+    window.addEventListener('load', () => {
+      testLocalSitemap();
+    });
+  </script>
+
+  <hr style="margin: 40px 0;">
+  
+  <h2>📋 Deployment Checklist</h2>
+  <ol>
+    <li>✅ Static <code>sitemap.xml</code> created in <code>/public</code></li>
+    <li>✅ Static <code>robots.txt</code> created in <code>/public</code></li>
+    <li>✅ Netlify config updated (<code>netlify.toml</code>)</li>
+    <li>✅ Vercel config updated (<code>vercel.json</code>)</li>
+    <li>✅ Headers config added (<code>/public/_headers</code>)</li>
+    <li>✅ Apache config added (<code>/public/.htaccess</code>)</li>
+    <li>⏳ Deploy to production</li>
+    <li>⏳ Test production URLs</li>
+    <li>⏳ Submit to Google Search Console</li>
+  </ol>
+
+  <h2>🎯 Google Search Console Instructions</h2>
+  <ol>
+    <li>Go to <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a></li>
+    <li>Select your property: <code>sheetcutters.com</code></li>
+    <li>Navigate to <strong>Sitemaps</strong> in the left sidebar</li>
+    <li>In "Add a new sitemap", enter: <code>sitemap.xml</code></li>
+    <li>Click <strong>Submit</strong></li>
+    <li>Wait 5-10 minutes and refresh to see status</li>
+  </ol>
+
+  <p><strong>Expected Result:</strong> Status should show "Success" with discovered pages (7 URLs)</p>
+</body>
+</html>

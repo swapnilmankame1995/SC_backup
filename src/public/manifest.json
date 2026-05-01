@@ -1,0 +1,75 @@
+{
+  "name": "SheetCutters - Custom Laser Cutting & Sheet Metal Fabrication",
+  "short_name": "SheetCutters",
+  "description": "Professional laser cutting services for metal, acrylic, wood, and more. Upload your DXF/SVG files and get instant quotes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#dc0000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon-simple.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "figma:asset/8758c0c28e5fac5cbc581e13aa177762a8ed5024.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/favicon-simple.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Upload Design",
+      "short_name": "Upload",
+      "description": "Upload a new design file",
+      "url": "/?action=upload",
+      "icons": [
+        {
+          "src": "/favicon-simple.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "My Orders",
+      "short_name": "Orders",
+      "description": "View your order history",
+      "url": "/?action=orders",
+      "icons": [
+        {
+          "src": "/favicon-simple.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Get Quote",
+      "short_name": "Quote",
+      "description": "Get instant pricing",
+      "url": "/?action=quote",
+      "icons": [
+        {
+          "src": "/favicon-simple.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

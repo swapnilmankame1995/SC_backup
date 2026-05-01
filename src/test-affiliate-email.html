@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Affiliate Email - Sheetcutters</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(220, 0, 0, 0.3);
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .logo-sheet {
+      color: #000000;
+    }
+
+    .logo-cutters {
+      color: #dc0000;
+      font-family: 'Brush Script MT', cursive;
+      font-style: italic;
+    }
+
+    h1 {
+      color: #000000;
+      font-size: 24px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #666666;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: #000000;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #dc0000;
+      box-shadow: 0 0 0 3px rgba(220, 0, 0, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #dc0000;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #b00000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 0, 0, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .result.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .result.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .note {
+      background-color: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 12px;
+      margin-top: 20px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #856404;
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <span class="logo-sheet">Sheet</span><span class="logo-cutters">Cutters</span>
+    </div>
+
+    <h1>Test Affiliate Email</h1>
+    <p class="subtitle">Send a test affiliate welcome email to verify email delivery</p>
+
+    <form id="testForm">
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          placeholder="your.email@example.com" 
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name (optional)</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          placeholder="Test User"
+        >
+      </div>
+
+      <button type="submit" id="submitBtn">
+        Send Test Email
+      </button>
+    </form>
+
+    <div id="result" class="result"></div>
+
+    <div class="note">
+      <strong>📋 What this does:</strong>
+      This will send a test affiliate welcome email with sample data:
+      <ul style="margin-top: 8px; margin-left: 20px;">
+        <li>Discount Code: TEST10</li>
+        <li>Commission Rate: 5%</li>
+        <li>Referral Link: https://sheetcutters.com?ref=TEST10</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('testForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const resultDiv = document.getElementById('result');
+
+    // Get the project ID from the current URL or use localhost for testing
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    
+    // Replace with your actual Supabase project ID
+    const SUPABASE_PROJECT_ID = 'YOUR_SUPABASE_PROJECT_ID'; // Update this!
+    const API_BASE_URL = isLocal 
+      ? 'http://localhost:54321/functions/v1' 
+      : `https://${SUPABASE_PROJECT_ID}.supabase.co/functions/v1`;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const name = document.getElementById('name').value;
+
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="loading"></span>Sending...';
+      resultDiv.className = 'result';
+      resultDiv.style.display = 'none';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/make-server-8927474f/test-affiliate-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, name }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          resultDiv.className = 'result success';
+          resultDiv.innerHTML = `
+            <strong>✅ Success!</strong><br>
+            Test affiliate welcome email sent to <strong>${email}</strong><br>
+            <br>
+            Check your inbox (and spam folder) for the email with:
+            <ul style="margin-top: 8px; margin-left: 20px;">
+              <li>Subject: "Welcome to Sheetcutters Affiliate Program! 🎉"</li>
+              <li>From: support@sheetcutters.com</li>
+            </ul>
+          `;
+        } else {
+          throw new Error(data.error || 'Failed to send email');
+        }
+      } catch (error) {
+        resultDiv.className = 'result error';
+        resultDiv.innerHTML = `
+          <strong>❌ Error</strong><br>
+          ${error.message}<br>
+          <br>
+          <strong>Common issues:</strong>
+          <ul style="margin-top: 8px; margin-left: 20px;">
+            <li>Check if RESEND_API_KEY is set in environment variables</li>
+            <li>Verify your domain in Resend dashboard</li>
+            <li>Check server logs for detailed error messages</li>
+            <li>Update SUPABASE_PROJECT_ID in this HTML file</li>
+          </ul>
+        `;
+        console.error('Error:', error);
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Send Test Email';
+      }
+    });
+  </script>
+</body>
+</html>
